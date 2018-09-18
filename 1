@@ -1,5 +1,6 @@
 class TagsController < ApplicationController
  include TagsHelper
+ include ApplicationHelper
  def index
   @tags = Tag.all
  end
@@ -9,8 +10,6 @@ class TagsController < ApplicationController
 
  def destroy
   @tags = Tag.find(params[:id])
-  @tags.destroy
-  flash.notice = "Tag '#{@tags.name}' Destroyed"
-  redirect_to tags_path(Tag.all)
+  @tags.taggings.destroy(tag_params)
  end
 end
